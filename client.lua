@@ -9,26 +9,27 @@ local function startThread()
         local camOffset = config.camOffset
 
         SetCamFov(camId, camFov)
-
         RenderScriptCams(true, true, config.easeTime, true, false)
+        SetCamAffectsAiming(camId, true)
 
         while isActive do
-            Wait(0)
-
             local camCoords = GetGameplayCamCoord()
             local camRot = GetGameplayCamRot(0)
-
             local coords = GetOffsetFromCoordAndHeadingInWorldCoords(camCoords.x, camCoords.y, camCoords.z, camRot.z, camOffset.x, camOffset.y, camOffset.z)
 
             SetCamCoord(camId, coords.x, coords.y, coords.z)
             SetCamRot(camId, camRot.x, camRot.y, camRot.z, 0)
-            SetCamAffectsAiming(camId, true)
             ShowHudComponentThisFrame(14) -- Draw back Crosshair
 
-            if not IsPlayerFreeAiming(playerId) then isActive = false end
+            if not IsPlayerFreeAiming(playerId) or GetFollowPedCamViewMode() >= 3 then isActive = false end
+
+            Wait(0)
         end
 
         RenderScriptCams(false, true, config.easeTime, true, false)
+
+        Wait(config.easeTime * 2)
+
         DestroyCam(camId, true)
     end)
 end
@@ -41,34 +42,20 @@ local function onPressed()
     isActive = not isActive
 
     if isActive then
-        if not IsPlayerFreeAiming(playerId) then return end
+        if not IsPlayerFreeAiming(playerId) or GetFollowPedCamViewMode() >= 3 then isActive = false return end
 
         startThread()
     end
 end
 
+RegisterCommand(keyMapping.name, function()
+    if IsPauseMenuActive() then return end
+
+    onPressed()
+end, false)
+
 local keyMapping = config.keyMapping
-if lib and lib.name == "ox_lib" then
-    lib.addKeybind({
-        name =  keyMapping.name,
-        description = keyMapping.description,
-        defaultMapper = keyMapping.defaultMapper,
-        defaultKey = keyMapping.defaultKey,
-        onPressed = onPressed
-    })
-else
-    RegisterCommand('+' .. keyMapping.name, function()
-        if IsPauseMenuActive() then return end
-
-        onPressed()
-    end, false)
-
-    RegisterCommand('-' .. keyMapping.name, function()
-        if IsPauseMenuActive() then return end
-    end, false)
-
-    RegisterKeyMapping('+' .. keyMapping.name, keyMapping.description, keyMapping.defaultMapper, keyMapping.defaultKey)
-end
+RegisterKeyMapping(keyMapping.name, keyMapping.description, keyMapping.defaultMapper, keyMapping.defaultKey)
 
 ---@param state boolean
 exports("setDisabled", function(state)

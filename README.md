@@ -3,7 +3,7 @@
 
 Lightweight left peek camera script for FiveM, compatible with ESX, QBCore, Qbox, and standalone servers.
 
-Allows players to switch the camera to the left while aiming, and allows other resources to enable or disable it dynamically.
+Allows players to switch the camera to the left while aiming.
 
 * Lightweight & optimized
 * Works with **ox_lib** keybinds (optional)
@@ -37,13 +37,3 @@ Check if left peek is disabled:
 ---@return boolean
 exports["leftpeek"]:isDisabled()
 ```
-
----
-
-## Dependencies
-
-Optional:
-
-* ox_lib
-
-Script works without it using native key mapping.

@@ -4,7 +4,7 @@ config = {
 
     keyMapping = {
         name = "leftpeek",
-        description = "Toggle Left Peek",
+        description = "Toggle Left Shoulder",
         defaultKey = "g",
         defaultMapper = "keyboard",
     }
