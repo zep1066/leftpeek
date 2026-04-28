@@ -7,7 +7,7 @@ Allows players to switch the camera to the left while aiming.
 
 * Lightweight & optimized
 
----
+<img width="1280" height="720" alt="leftpeek" src="https://github.com/user-attachments/assets/3fc53f90-ca6e-4fdd-97cf-214299ae33fc" />
 
 ## Installation
 
