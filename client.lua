@@ -48,13 +48,13 @@ local function onPressed()
     end
 end
 
+local keyMapping = config.keyMapping
 RegisterCommand(keyMapping.name, function()
     if IsPauseMenuActive() then return end
 
     onPressed()
 end, false)
 
-local keyMapping = config.keyMapping
 RegisterKeyMapping(keyMapping.name, keyMapping.description, keyMapping.defaultMapper, keyMapping.defaultKey)
 
 ---@param state boolean

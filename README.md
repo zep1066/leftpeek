@@ -6,8 +6,7 @@ Lightweight left peek camera script for FiveM, compatible with ESX, QBCore, Qbox
 Allows players to switch the camera to the left while aiming.
 
 * Lightweight & optimized
-* Works with **ox_lib** keybinds (optional)
-  
+
 ---
 
 ## Installation
